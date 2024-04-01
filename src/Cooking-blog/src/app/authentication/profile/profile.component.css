@@ -1,0 +1,28 @@
+
+.container h3 {
+    text-decoration: underline;
+}
+
+.container img {
+    width: 7em;
+    height: 7em;
+    margin: auto;
+    display: block;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex p:first-child {
+    width: 35%;
+    text-align: right;
+    margin: .5em;
+}
+
+.flex p:last-child {
+    width: 55%;
+    text-align: left;
+    margin: .5em;
+    font-weight: bold;
+}

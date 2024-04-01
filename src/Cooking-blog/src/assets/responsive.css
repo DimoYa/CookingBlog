@@ -1,0 +1,42 @@
+@media (max-width: 800px) {
+    html {
+        font-size: 14px;
+    }
+
+    .d-flex {
+        display: block !important;
+    }
+
+    .navbar-nav {
+        align-items: flex-start;
+    }
+
+    .card-buttons {
+        align-self: center;
+    }
+
+    form.register>.container,
+    form.login>.container,
+    .profile>.container,
+    .updateProfile.container,
+    .article.container,
+    .admin.container {
+        width: 90% !important;
+    }
+
+    .loader {
+        margin: 140px;
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1280px) {
+    html {
+        font-size: 18px;
+    }
+}

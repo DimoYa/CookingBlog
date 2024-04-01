@@ -1,0 +1,16 @@
+/* footer  */
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    float: center;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+}

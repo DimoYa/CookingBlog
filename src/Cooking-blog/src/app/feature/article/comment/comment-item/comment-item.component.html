@@ -1,0 +1,49 @@
+<ng-template [ngIf]="comment">
+    <div *ngIf="!editMode" class="card mb-4">
+        <div class="card-body">
+            <p>{{comment.content}}</p>
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <img [src]="comment.authorPicture === '' || comment.authorPicture === 'null' ? defaultAvatarPath : comment.authorPicture"
+                        alt="avatar" width="25" height="25" />
+                    <p class="small mb-0 ms-2 text-muted small"><i class="fas fa-user"></i> {{comment.author}}</p>
+
+                    <p class="small mb-0 ms-2 text-muted small"><b class="mb-1">posted:</b>:
+                        <span class="fas fa-calendar p-1"> {{comment._kmd['ect'] | date: 'dd/MM/yyyy'}} </span>
+                        <span class="fa fa-clock-o p-1"> {{comment._kmd['ect'] | date: 'HH:mm'}}</span>
+                    </p>
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                    <i *ngIf="canModify" class="fas fa-edit mx-2 fa-xs text-black" (click)="editMode = true"
+                        title="edit comment"></i>
+                    <i *ngIf="canModify" class="far fa-trash-alt mx-2 fa-xs text-black"
+                        (click)="deleteComment(comment._id)" title="delete comment"></i>
+                    <i *ngIf="canLike" class="fa fa-thumbs-o-up mx-2 fa-xs text-black"
+                        (click)="likeComment(comment._id)" title="like comment"></i>
+                    <i *ngIf="canDislike" class="fa fa-thumbs-o-down mx-2 fa-xs text-black"
+                        (click)="dislikeComment(comment._id)" title="dislike comment"></i>
+                </div>
+            </div>
+            <p class="small mb-0 pt-2 text-muted small"><b>Likes:</b> {{comment.likes.length}}</p>
+        </div>
+    </div>
+    <form *ngIf="editMode" class="mb-3" [formGroup]="editCommentForm"
+        (submit)="editComment(comment._id, comment.articleId)">
+
+        <!-- content -->
+        <p class="form-outline mb-4">
+            <textarea type="text" class="form-control" rows="3" formControlName="content"
+                [ngModel]="comment.content"></textarea>
+        </p>
+        <ng-container *ngIf="f['content'].touched && f['content'].invalid">
+            <p *ngIf="f['content'].errors['required']" class="alert alert-danger">
+                Content is required!
+            </p>
+        </ng-container>
+
+        <button type="submit" class="btn btn-primary btn-sm mr-1" [disabled]="editCommentForm.invalid"> Edit comment
+        </button>
+        <button class="btn btn-warning btn-sm" (click)="editMode = false">Cancel </button>
+    </form>
+</ng-template>
