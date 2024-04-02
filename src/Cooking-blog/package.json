@@ -6,7 +6,7 @@
     "start": "node server.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build && firebase deploy"
+    "build": "ng build"
   },
   "private": true,
   "dependencies": {
