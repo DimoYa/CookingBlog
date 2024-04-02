@@ -45,7 +45,7 @@ export class ArticleEditComponent implements OnInit {
   editArticleForm: FormGroup = this.fb.group({
     headline: new FormControl(null, [
       Validators.required,
-      Validators.maxLength(40),
+      Validators.maxLength(50),
     ]),
     content: new FormControl(null, [
       Validators.required,
