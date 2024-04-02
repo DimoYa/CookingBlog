@@ -12,6 +12,9 @@ jobs:
         working-directory: ./src/Cooking-blog/
     steps:
       - uses: actions/checkout@v2
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+      - run: npm install
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
