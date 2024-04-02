@@ -9,6 +9,9 @@ jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/Cooking-blog/  # Add the working directory configuration here
     outputs:
       deployment_successful: ${{ steps.deploy.outputs.deployment_successful }}
     steps:
