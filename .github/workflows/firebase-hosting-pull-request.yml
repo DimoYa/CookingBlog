@@ -27,10 +27,7 @@ jobs:
       - name: Build project
         run: npm run build
         id: build
-
-      - name: List contents of working directory after build
-        run: ls -la
-
+        
       - name: Deploy to Firebase Hosting
         id: deploy
         if: success() # Only run deployment if previous steps were successful
