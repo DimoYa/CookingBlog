@@ -21,4 +21,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COOKING_BLOG_DEV }}'
           projectId: cooking-blog-dev
-          entryPoint: ./src/Cooking-blog/firebase.json 
+          entryPoint: src/Cooking-blog
