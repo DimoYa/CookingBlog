@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist\\cooking-blog",
+    "public": "dist/cooking-blog",
     "ignore": [
       "firebase.json",
       "**/.*",
