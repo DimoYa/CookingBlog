@@ -1,7 +1,7 @@
 /* footer  */
 
 footer {
-    position: absolute;
+    margin: 2em auto 1rem;
     bottom: 0;
     width: 100%;
 }

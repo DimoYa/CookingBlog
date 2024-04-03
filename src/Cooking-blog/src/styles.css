@@ -9,7 +9,11 @@ body {
     margin: auto;
     position: relative;
     min-height: 100vh;
-    border: 1px outset #147a9e;
+    
+    background-image: url('./assets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .wrapper {
