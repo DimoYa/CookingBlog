@@ -1,0 +1,48 @@
+<form [formGroup]="articleCreateFormGroup" (ngSubmit)="createArticle()">
+    <div class="container article">
+        <fieldset>
+            <h2 class="label">Create new article</h2>
+
+            <!-- headline -->
+            <p class="field field-icon">
+                <label for="headline"><span><i class="fas fa-heading"></i></span></label>
+                <input formControlName="headline" [class.input-error]="f['headline'].touched && f['headline'].invalid"
+                    type="text" name="headline" id="headline" placeholder="Enter your title">
+            </p>
+            <ng-container *ngIf="f['headline'].touched && f['headline'].invalid">
+                <p *ngIf="f['headline'].errors['required']" class="alert alert-danger">
+                    Title is required!
+                </p>
+
+                <p *ngIf="f['headline'].errors['maxlength']" class="alert alert-danger">
+                    The text must be not more than {{f['headline'].errors['maxlength'].requiredLength}} characters
+                </p>
+            </ng-container>
+
+            <!-- content -->
+            <p class="field field-icon">
+                <textarea [class.input-error]="f['content'].touched && f['content'].invalid" rows="8"
+                    formControlName="content" placeholder="Enter yout content here"></textarea>
+            </p>
+            <ng-container *ngIf="f['content'].touched && f['content'].invalid">
+                <p *ngIf="f['content'].errors['required']" class="alert alert-danger">
+                    Content is required!
+                </p>
+
+                <p *ngIf="f['content'].errors['minlength']" class="alert alert-danger">
+                    The text must be at least {{f['content'].errors['minlength'].requiredLength}} characters
+                </p>
+            </ng-container>
+
+            <!-- imageUrl -->
+            <p class="field field-icon">
+                <label for="image"><span><i class="fa fa-image"></i></span></label>
+                <input formControlName="image"
+                    type="text" name="image" id="image" placeholder="Add image link">
+            </p>
+
+            <button class="btn btn-primary btn-block" [disabled]="articleCreateFormGroup.invalid">Submit your
+                article</button>
+        </fieldset>
+    </div>
+</form>

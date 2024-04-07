@@ -1,0 +1,24 @@
+
+<ng-template [ngIf]="article">
+    <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+       <div class="card-body d-flex flex-column align-items-start">
+          <h4 class="d-inline-block mb-2">{{article.headline}}</h4>
+          <div *ngIf="article._kmd['ect']== article._kmd['lmt']" class="mb-1 text-muted small"><b>Created by:</b>
+             <span class="fa fa-pencil p-1"> </span>
+          </div>
+          <div *ngIf="article._kmd['ect']!= article._kmd['lmt']" class="mb-1 text-muted small"><b>Modified by:</b>
+             <span class="fa fa-pencil p-1"> {{article.modified}}</span>
+          </div>
+          <div *ngIf="article._kmd['ect']== article._kmd['lmt']" class="mb-1 text-muted small"><b>Published:</b>
+             <span class="fas fa-calendar p-1"> {{article._kmd['ect'] | date: 'fullDate'}}</span>
+             <span class="fa fa-clock-o p-1"> {{article._kmd['ect'] | date: 'HH:mm'}}</span></div>
+          <div *ngIf="article._kmd['ect']!= article._kmd['lmt']" class="mb-1 text-muted small"><b>Modified:</b>
+             <span class="fas fa-calendar p-1"> {{article._kmd['lmt'] | date: 'fullDate'}}</span>
+             <span class="fa fa-clock-o p-1"> {{article._kmd['lmt'] | date: 'HH:mm'}}</span></div>
+          <p class="text-muted small text-justify">{{article.content | slice:0:500}}...</p>
+          <button class="btn btn-outline-primary" role="button" [routerLink]="['/article/list/', article._id]">{{detailsBtnName}}</button>
+       </div>
+       <img *ngIf="article.image" class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail"
+          src="{{article.image}}">
+    </div>
+ </ng-template>

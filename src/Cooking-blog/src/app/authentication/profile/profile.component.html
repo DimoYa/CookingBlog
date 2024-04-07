@@ -1,0 +1,25 @@
+<div *ngIf="currentUser$ | async as user">
+    <div class="profile">
+        <div class="container"><img [src]="user.photo === null || user.photo === '' ? defaultAvatarPath : user.photo" alt="default user">
+            <div class="flex">
+                <p>Username: </p>
+                <p>{{user.username}}</p>
+            </div>
+            <div class="flex">
+                <p>Full Name: </p>
+                <p>{{user.fullname}}</p>
+            </div>
+            <div class="flex">
+                <p>Phone: </p>
+                <p *ngIf="user.phoneNumber">{{user.phoneCode}} {{user.phoneNumber}}</p>
+                <p *ngIf="!user.phoneNumber"></p>
+            </div>
+            <hr>
+            <div id="buttons">
+                <button type="button" class="btn btn-success" (click)="updateUser()">Update profile</button>
+                <button *ngIf="!isAdmin" type="button" class="btn btn-danger" (click)="deleteUser()">Delete profile</button>
+            </div>
+        </div>
+        
+    </div>
+</div>

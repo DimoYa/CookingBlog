@@ -1,0 +1,56 @@
+<ng-template [ngIf]="userData">
+    <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()">
+        <div class="container updateProfile">
+            <fieldset>
+                <h3>Update user info - <b>{{userData.username}}</b></h3>
+
+                <!-- fullname -->
+                <p class="field field-icon">
+                    <label for="fullname"><span><i class="fas fa-user"></i></span></label>
+                    <input formControlName="fullname" placeholder="Full Name" [ngModel]="userData.fullname">
+                </p>
+
+                <ng-container *ngIf="f['fullname'].touched && f['fullname'].invalid">
+                    <p *ngIf="f['fullname'].errors['required']" class="alert-danger">
+                        Fullname is required!
+                    </p>
+
+                    <p *ngIf="f['fullname'].errors['fullname']" class="alert-danger">
+                        Fullname input field must contain two names (letters only) separated by a space!
+                    </p>
+                </ng-container>
+
+                <!-- phone -->
+                <p class="field field-icon">
+                    <label for="phoneNumber"><span><i class="fas fa-phone"></i></span></label>
+                    <select style="max-width: 120px;" formControlName="phoneCode">
+                        <option class="dropdown-item" *ngFor="let code of getCodes" [ngValue]="code">{{code}}</option>
+                    </select>
+                    <input formControlName="phoneNumber" placeholder="Phone number" type="text"
+                        [ngModel]="userData.phoneNumber">
+                </p>
+
+                <ng-container *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+                    <p *ngIf="f['phoneNumber'].errors['phoneNumber']" class="alert-danger">
+                        Invalid phone number!
+                    </p>
+                </ng-container>
+
+
+                <!-- photo -->
+                <p class="field field-icon">
+                    <label for="fullname"><span><i class="fa fa-image"></i></span></label>
+                    <input formControlName="photo" placeholder="Add image link" [ngModel]="userData.photo">
+                </p>
+
+
+                <div class="buttons">
+                    <button class="btn btn-warning" (click)="cancel()">Cancel </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-primary " [disabled]="updateUserForm.invalid">
+                        Update Account </button>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</ng-template>
