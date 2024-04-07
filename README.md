@@ -80,4 +80,4 @@ ng serve
 
 # Deployment
 
-Application is deployed to 
+Application is deployed to https://cooking-blog-dev.web.app/
