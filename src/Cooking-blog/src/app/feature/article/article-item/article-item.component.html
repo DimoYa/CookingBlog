@@ -16,7 +16,11 @@
              <span class="fas fa-calendar p-1"> {{article._kmd['lmt'] | date: 'fullDate'}}</span>
              <span class="fa fa-clock-o p-1"> {{article._kmd['lmt'] | date: 'HH:mm'}}</span></div>
           <p class="text-muted small text-justify">{{article.content | slice:0:500}}...</p>
-          <button class="btn btn-outline-primary" role="button" [routerLink]="['/article/list/', article._id]">{{detailsBtnName}}</button>
+          <!-- <button class="btn btn-outline-primary" role="button" [routerLink]="['/article/list/', article._id]">{{detailsBtnName}}</button> -->
+          <div class="button-wrapper">
+            <button class="btn btn-outline-primary" role="button" [routerLink]="['/article/list/', article._id]"></button>
+            <span class="button-text">{{detailsBtnName}}</span>
+        </div>
        </div>
        <img *ngIf="article.image" class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail"
           src="{{article.image}}">
