@@ -67,6 +67,10 @@ The application is a Fishing blog/forum app that will be used for articles and d
 * [Font Awesome](https://fontawesome.com/docs)
 * [Bootstrap](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
 
+# Required installations
+* [Node.Js](https://nodejs.org/en)
+* [Angular CLI](https://angular.io/cli)
+
 # Get started
 
 ```
@@ -76,4 +80,4 @@ ng serve
 
 # Deployment
 
-Application is deployed to 
+Application is deployed to https://cooking-blog-dev.web.app/
