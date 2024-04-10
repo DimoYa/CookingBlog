@@ -1,6 +1,6 @@
 # Description
  
-The application is a Fishing blog/forum app that will be used for articles and discussions.
+The application is a Cooking blog/forum app that will be used for articles and discussions.
 
 # Users and functionalities
 
