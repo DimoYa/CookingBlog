@@ -7,7 +7,7 @@
             <!-- email -->
             <p class="field field-icon">
                 <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-                <input formControlName="email" type="email" name="email" id="email" placeholder="user@gmail.com">
+                <input formControlName="email" type="email" name="email" id="email" placeholder="user@gmail.com" style="width: 100%;">
             </p>
     
             <ng-container *ngIf="f['email'].touched && f['email'].invalid">
@@ -23,7 +23,7 @@
             <p class="field field-icon">
                 <label for="fullname"><span><i class="fas fa-user"></i></span></label>
                 <input formControlName="fullname" type="text" name="fullname" id="fullname"
-                    placeholder="FirstName LastName">
+                    placeholder="FirstName LastName" style="width: 100%;">
             </p>
     
             <ng-container *ngIf="f['fullname'].touched && f['fullname'].invalid">
@@ -43,7 +43,7 @@
                     <option value="{{code}}" *ngFor="let code of getCodes">{{code}}</option>
                 </select>
                 <input formControlName="phoneNumber" type="phoneNumber" name="phoneNumber" id="phoneNumber"
-                    placeholder="885 888 888">
+                    placeholder="885 888 888" style="width: 100%;">
             </p>
     
             <ng-container *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
@@ -56,7 +56,7 @@
             <p class="field field-icon">
                 <label for="fullname"><span><i class="fa fa-image"></i></span></label>
                 <input formControlName="photo" type="text" name="photo" 
-                    placeholder="Add image url">
+                    placeholder="Add image url" style="width: 100%;">
             </p>
     
             <!-- password -->
@@ -64,7 +64,7 @@
             <div formGroupName="passwords">
                 <p class="field field-icon">
                     <label for="password"><span><i class="fas fa-lock"></i></span></label>
-                    <input formControlName="password" type="password" name="password" id="password" placeholder="******">
+                    <input formControlName="password" type="password" name="password" id="password" placeholder="******" style="width: 100%;">
                 </p>
     
                 <ng-container
@@ -82,7 +82,7 @@
                 <p class="field field-icon">
                     <label for="rePassword"><span><i class="fas fa-lock"></i></span></label>
                     <input formControlName="rePassword" type="password" name="rePassword" id="rePassword"
-                        placeholder="******">
+                        placeholder="******" style="width: 100%;">
                 </p>
     
                 <ng-container

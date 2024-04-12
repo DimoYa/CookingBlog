@@ -1,0 +1,7 @@
+.btn {
+    width: auto; /* Allow the button to adjust its width based on content */
+    max-width: 100%; /* Set a maximum width for the button */
+    padding: 10px 20px; /* Adjust padding as needed */
+    margin: 20px auto; /* Center the button horizontally */
+    display: block; /* Make it a block element to take full width */
+}
