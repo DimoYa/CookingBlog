@@ -26,7 +26,7 @@ export class RegisterComponent implements OnDestroy {
 
   passwordControl = new FormControl(null, [
     Validators.required,
-    Validators.minLength(4),
+    Validators.minLength(6),
   ]);
 
   get passwordsGroup(): FormGroup {
