@@ -5,11 +5,10 @@
 @import "../node_modules/@costlydeveloper/ngx-awesome-popup/styles/theme.css";
 
 body {
-    max-width: 1366px;
+    max-width: 100%;
     margin: auto;
     position: relative;
     min-height: 100vh;
-    
     background-image: url('./assets/background.png');
     background-size: cover;
     background-repeat: no-repeat;
