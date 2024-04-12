@@ -8,7 +8,7 @@
                 <label for="email"><span><i class="fas fa-envelope"></i></span></label>
                 <input formControlName="email"
                     [class.input-error]="f['email'].touched && f['email'].invalid"
-                    type="email" name="email" id="email" placeholder="user@gmail.com">
+                    type="email" name="email" id="email" placeholder="user@gmail.com" style="width: 100%;">
             </p>
             <ng-container *ngIf="f['email'].touched && f['email'].invalid">
                 <p *ngIf="f['email'].errors['required']" class="alert alert-danger">
@@ -23,7 +23,7 @@
             <!-- password -->
             <p class="field field-icon">
                 <label for="password"><span><i class="fas fa-lock"></i></span></label>
-                <input formControlName="password" type="password" name="password" id="password" placeholder="******">
+                <input formControlName="password" type="password" name="password" id="password" placeholder="******" style="width: 100%;">
             </p>
             <ng-container *ngIf="f['password'].touched && f['password'].invalid">
                 <p *ngIf="f['password'].errors['required']" class="alert alert-danger">
