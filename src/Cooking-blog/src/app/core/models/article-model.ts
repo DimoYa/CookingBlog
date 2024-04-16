@@ -6,5 +6,6 @@ interface ArticleModel extends Base {
     headline: string;
     content: string;
     image: string;
+    votes: string[];
 }
 export default ArticleModel;

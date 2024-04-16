@@ -2,7 +2,8 @@
   "name": "cooking-blog",
   "version": "0.0.0",
   "scripts": {
-    "build": "ng build --prod"
+    "build": "ng build --prod",
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {

@@ -18,3 +18,7 @@ img,
     background-color: #4ebced;
     color: #fff;
 }
+
+i {
+    cursor: pointer;
+}

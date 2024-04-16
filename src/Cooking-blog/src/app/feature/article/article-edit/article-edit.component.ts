@@ -59,7 +59,7 @@ export class ArticleEditComponent implements OnInit {
     body.author = this.article.author;
     body.modified = this.currentuserName;
 
-    this.articleService.editArticle$(body, this.article._id).subscribe(() => {
+    this.articleService.editArticle$(body, this.article._id, 'updated').subscribe(() => {
       this.router.navigate([`/article/list/${this.id}`]);
     });
   }

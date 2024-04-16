@@ -45,6 +45,7 @@ export class ArticleCreateComponent implements OnDestroy {
   createArticle(): void {
     const body: ArticleModel = this.articleCreateFormGroup.value;
     body.author = this.authenticationService.returnUserName();
+    body.votes = [];
 
     this.subscription.add(
       this.articleService.createArticle$(body).subscribe(() => {

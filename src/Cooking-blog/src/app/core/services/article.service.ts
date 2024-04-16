@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from './authentication.service';
 import ArticleModel from '../models/article-model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +28,11 @@ export class ArticleService {
   }
 
   getArticles$(): Observable<ArticleModel[]> {
-    return this.httpClient.get<ArticleModel[]>(
-      `${this.articleEndPoint}?query={}&sort={"_kmd.ect": -1}`
+    return this.httpClient.get<ArticleModel[]>(this.articleEndPoint).pipe(
+      map((articles: ArticleModel[]) => {
+        // Sort articles by the length of the votes array in descending order
+        return articles.sort((a, b) => b.votes.length - a.votes.length);
+      })
     );
   }
 
@@ -55,14 +59,14 @@ export class ArticleService {
     );
   }
 
-  editArticle$(body: ArticleModel, id: string) {
+  editArticle$(body: ArticleModel, id: string, operation: string) {
     return this.httpClient.put<ArticleModel>(
       `${this.articleEndPoint}/${id}`,
       body,
       {
         headers: new HttpHeaders().set(
           'Response',
-          'Article updated successfully'
+          `Article ${operation} successfully`
         ),
       }
     );

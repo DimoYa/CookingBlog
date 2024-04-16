@@ -21,6 +21,8 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
   id: string;
   currentuserName: string;
   isAdmin: boolean;
+  canLike!: boolean;
+  canDislike!: boolean;
   isExpanded = false;
 
   constructor(
@@ -43,11 +45,17 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
           this.comments$ = this.commentService.getAllCommentsByArticle$(
             this.id
           );
+          this.currentuserName = this.authenticationService.returnUserName();
+          this.canLike = !data.votes.includes(this.currentuserName) && data.author !== this.currentuserName;
+          this.canDislike = data.votes.includes(this.currentuserName);
+
         });
+
       })
     );
-    this.currentuserName = this.authenticationService.returnUserName();
     this.isAdmin = this.authenticationService.isAdmin();
+
+
   }
 
   ngOnDestroy(): void {
@@ -67,14 +75,14 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
       this.subscription.add(
         confirmBox.openConfirmBox$().subscribe((resp) => {
           // if (resp.success) {
-            this.subscription.add(
-              this.articleService.deleteArticle$(id).subscribe(() => {
-                this.commentService.deleteAllCommentsByArticle$(id).subscribe(() => {
-                  this.router.navigate(['/article/list']);
-                });
-              })
-            );
-          }
+          this.subscription.add(
+            this.articleService.deleteArticle$(id).subscribe(() => {
+              this.commentService.deleteAllCommentsByArticle$(id).subscribe(() => {
+                this.router.navigate(['/article/list']);
+              });
+            })
+          );
+        }
         /*}*/)
       );
     }
@@ -83,5 +91,40 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
   loadComments(): void {
     this.comments$ = this.commentService.getAllCommentsByArticle$(this.id);
     this.isExpanded = true;
+  }
+
+  upvoteArticle(articleId: string): void {
+    const body = this.article;
+
+    body.votes.push(this.currentuserName);
+    body.modified = this.article.author;
+
+    this.subscription.add(
+      this.articleService.editArticle$(body, articleId, 'upvoted').subscribe(() => {
+       // Perform reload
+      this.reloadCurrentRoute();
+      })
+    );
+  }
+
+  downVoteArticle(articleId: string): void {
+    const body = this.article;
+    const index = body.votes.indexOf(this.currentuserName);
+    body.votes.splice(index, 1);
+    body.modified = this.article.author;
+
+    this.subscription.add(
+      this.articleService.editArticle$(body, articleId, 'downvoted').subscribe(() => {
+        // Perform reload
+      this.reloadCurrentRoute();
+      })
+    );
+  }
+
+  reloadCurrentRoute(): void {
+    // Reload the current route
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([`/article/list/${this.article._id}`]);
+    });
   }
 }

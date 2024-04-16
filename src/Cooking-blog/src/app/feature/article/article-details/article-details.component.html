@@ -28,12 +28,18 @@
             &nbsp;
             <button type="button" class="btn btn-danger" (click)="deleteArticle(article._id)">Delete
                 article</button>
+
         </div>
+        <div>
+            <i  *ngIf="canLike" class="fa fa-thumbs-o-up mx-2 fa-lg" (click)="upvoteArticle(article._id)" title="Upvote article"></i>
+            <i *ngIf="canDislike" class="fa fa-thumbs-o-down mx-2 fa-lg" (click)="downVoteArticle(article._id)" title="Downvote article"></i>
+        </div>
+        <p class="small mb-0 pt-2 text-muted small"><b>Votes:</b> {{article.votes.length}}</p>
     </div>
     <div class="row d-flex justify-content-center">
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-0 border">
-                <div  class="card-body p-4">
+                <div class="card-body p-4">
                     <app-comment-create [articleId]="article._id" (articleCommentEmitter)="loadComments()">
                     </app-comment-create>
 
