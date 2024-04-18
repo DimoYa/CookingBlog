@@ -101,7 +101,6 @@ export class CommentItemComponent implements OnInit {
   likeComment(commentId: string): void {
     const body = this.comment;
     body.likes.push(this.currentuserId);
-    body.likes.push(this.currentuserId);
 
     this.subscription.add(
       this.commentService.editComment$(body, commentId, 'liked').subscribe(() => {
