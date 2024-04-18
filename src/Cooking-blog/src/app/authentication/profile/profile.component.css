@@ -11,8 +11,8 @@
 }
 
 .flex {
-    /* display: flex; */
-    display: block;
+    display: flex;
+    /* display: block;  */
 }
 
 .flex p:first-child {
