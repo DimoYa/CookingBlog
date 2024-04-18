@@ -8,5 +8,4 @@
 
 #createButton {
     position: relative; /* Set position relative to its normal position */
-    left: -50px; /* Adjust the left position by 20 pixels */
 }

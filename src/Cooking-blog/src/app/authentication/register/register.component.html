@@ -73,7 +73,8 @@
                         Password is required!
                     </p>
                     <p *ngIf="passwordsGroup.controls['password'].errors['minlength']" class="alert-danger">
-                        Password must be at least {{passwordsGroup.controls['password'].errors['minlength'].requiredLength}} characters!
+                        Password must be at least {{passwordsGroup.controls['password'].errors['minlength'].requiredLength}} characters,
+                        <br>at least one uppercase and lowercase letter, at least one number and a special symbol!
                     </p>
                 </ng-container>
     
