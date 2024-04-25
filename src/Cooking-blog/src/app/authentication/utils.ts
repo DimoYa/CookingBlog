@@ -45,6 +45,51 @@ export function phoneNumberValidator(control: AbstractControl): ValidationErrors
     return null;
 }
 
+export function articleHeadlineValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) {
+        return null
+    }
+
+    if (!/^\S+$/.test(value)) {
+        return {
+            articleHeadline: true,
+        }
+    }
+    return null;
+}
+
+export function articleContentValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) {
+        return null
+    }
+
+    if (!/^\S+$/.test(value)) {
+        return {
+            articleContent: true,
+        }
+    }
+    return null;
+}
+
+export function articleImageValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) {
+        return null
+    }
+
+    if (!/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value)) {
+        return {
+            articleImage: true,
+        }
+    }
+    return null;
+}
+
 export function passwordMatch(passwordFormControl: AbstractControl) {
     const validtorFn: ValidatorFn = (rePasswordFormControl: AbstractControl) => {
         if (passwordFormControl.value !== rePasswordFormControl.value) {
