@@ -37,7 +37,7 @@ export class ArticleService {
   }
 
   getUserArticles$(): Observable<ArticleModel[]> {
-    const currentUser = 'admin@admin.bg';
+    const currentUser = this.authenticationService.returnUserName();
     return this.httpClient.get<ArticleModel[]>(
       `${this.baseUrl}/article?query={"author":"${currentUser}"}&sort={"_kmd.ect": -1}`
     );
