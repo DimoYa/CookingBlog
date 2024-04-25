@@ -91,9 +91,9 @@ export class CommentItemComponent implements OnInit {
     body.likes = this.comment.likes;
 
     this.subscription.add(
-      this.commentService.addComment$(body).subscribe(() => {
+      this.commentService.editComment$(body, commentId, 'edited').subscribe(() => {
         this.articleCommentEmitter.emit();
-        this.editMode = false;
+        this.editMode = false;  
       })
     );
   }
