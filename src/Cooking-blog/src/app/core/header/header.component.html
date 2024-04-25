@@ -40,10 +40,7 @@
             <ul class="navbar-nav mt-2 mt-lg-0" *ngIf="isLogged">
 
                 <li class="nav-item" [routerLink]="['/user/profile/',userId]">
-                    <!-- <a><img [src]="avatar === 'null' || avatar === '' ? defaultAvatarPath: avatar" class="avatar"
-                            alt="Avatar"></a> -->
-                            <a><img [src]="defaultAvatarPath" class="avatar"
-                                alt="Avatar"></a>
+                    <a><img [src]="avatar === 'null' || avatar === '' ? defaultAvatarPath: avatar" class="avatar" alt="Avatar"></a>
                 </li>
                 <li class="nav-item">
                     <a (click)="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
