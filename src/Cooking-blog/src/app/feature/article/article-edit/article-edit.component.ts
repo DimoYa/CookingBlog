@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { articleContentValidator, articleHeadlineValidator, articleImageValidator } from 'src/app/authentication/utils';
 import ArticleModel from 'src/app/core/models/article-model';
 import { ArticleService } from 'src/app/core/services/article.service';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -46,12 +47,16 @@ export class ArticleEditComponent implements OnInit {
     headline: new FormControl(null, [
       Validators.required,
       Validators.maxLength(50),
+      articleHeadlineValidator,
     ]),
     content: new FormControl(null, [
       Validators.required,
       Validators.minLength(10),
+      articleContentValidator,
     ]),
-    image: new FormControl(null, [Validators.nullValidator]),
+    image: new FormControl(null, [Validators.nullValidator,
+      articleImageValidator,
+    ]),
   });
 
   editArticle(): void {
