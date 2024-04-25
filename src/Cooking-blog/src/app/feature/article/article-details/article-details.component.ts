@@ -66,7 +66,7 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
     if (this.canModify(this.article)) {
       this.subscription.add(
         confirmBox.openConfirmBox$().subscribe((resp) => {
-          // if (resp.success) {
+          if (resp.success) {
             this.subscription.add(
               this.articleService.deleteArticle$(id).subscribe(() => {
                 this.commentService.deleteAllCommentsByArticle$(id).subscribe(() => {
@@ -75,7 +75,7 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
               })
             );
           }
-        /*}*/)
+        })
       );
     }
   }
