@@ -10,6 +10,9 @@ import { Subscription } from 'rxjs';
 import ArticleModel from 'src/app/core/models/article-model';
 import { ArticleService } from 'src/app/core/services/article.service';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { articleHeadlineValidator } from 'src/app/authentication/utils';
+import { articleContentValidator } from 'src/app/authentication/utils';
+import { articleImageValidator } from 'src/app/authentication/utils';
 
 @Component({
   selector: 'app-article-create',
@@ -21,14 +24,18 @@ export class ArticleCreateComponent implements OnDestroy {
 
   articleCreateFormGroup: FormGroup = this.formBuilder.group({
     headline: new FormControl(null, [
-      // Validators.required,
+      Validators.required,
       Validators.maxLength(50),
+      articleHeadlineValidator,
     ]),
     content: new FormControl(null, [
       Validators.required,
       Validators.minLength(10),
+      articleContentValidator,
     ]),
-    image: new FormControl(null, [Validators.nullValidator]),
+    image: new FormControl(null, [Validators.nullValidator,
+      articleImageValidator,
+    ]),
   });
 
   constructor(
