@@ -2,19 +2,16 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { appKey } from "src/app/kinvey.tokens";
-
 export const environment = {
-  production: false,
-  apiUserUrl: `https://baas.kinvey.com/user/${appKey}`,
-  apiAppUrl: `https://baas.kinvey.com/appdata/${appKey}`
+  production: true,
+  firebase: {
+    apiKey: "AIzaSyDxET5eMHzUgGAq9aBL4PF3_tw62TmhZso",
+    authDomain: "cooking-blog-dev.firebaseapp.com",
+    projectId: "cooking-blog-dev",
+    storageBucket: "cooking-blog-dev.firebasestorage.app",
+    messagingSenderId: "178567320053",
+    appId: "1:178567320053:web:842022ff572d6e1f5310bc"
+  }
 };
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

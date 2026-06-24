@@ -52,7 +52,7 @@ export function articleHeadlineValidator(control: AbstractControl): ValidationEr
         return null
     }
 
-    if (!/^\S+$/.test(value)) {
+    if (!/\S/.test(value)) {
         return {
             articleHeadline: true,
         }
@@ -67,7 +67,7 @@ export function articleContentValidator(control: AbstractControl): ValidationErr
         return null
     }
 
-    if (!/^\S+$/.test(value)) {
+    if (!/\S/.test(value)) {
         return {
             articleContent: true,
         }

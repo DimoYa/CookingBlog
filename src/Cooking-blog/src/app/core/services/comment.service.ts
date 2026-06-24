@@ -1,61 +1,96 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Firestore, collection, doc, addDoc, getDoc, getDocs, updateDoc, deleteDoc, query, where, serverTimestamp, Timestamp } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
+import { from, Observable } from 'rxjs';
 import CommentModel from '../models/comment-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private firestore: Firestore,
+    private toastr: ToastrService,
+  ) { }
 
-  private readonly baseUrl = environment.apiAppUrl;
-  private readonly commentEndPoint = `${this.baseUrl}/comment`;
+  private readonly commentCollection = 'comments';
+
+  private mapComment(id: string, data: any): CommentModel {
+    return {
+      ...data,
+      _id: id,
+      _kmd: {
+        ect: data?.createdAt instanceof Timestamp ? data.createdAt.toDate().toISOString() : data?.createdAt,
+        lmt: data?.updatedAt instanceof Timestamp ? data.updatedAt.toDate().toISOString() : data?.updatedAt,
+      },
+    } as CommentModel;
+  }
 
   getAllCommentsByArticle$(articleId: string): Observable<CommentModel[]> {
-    return this.httpClient.get<CommentModel[]>(
-      `${this.commentEndPoint}?query={"articleId":"${articleId}"}&sort={"likes.length": -1}`
+    return from(
+      getDocs(query(
+        collection(this.firestore, this.commentCollection),
+        where('articleId', '==', articleId)
+      )).then(snap => snap.docs
+        .map(d => this.mapComment(d.id, d.data()))
+        .sort((a, b) => (b._kmd?.ect ?? '') > (a._kmd?.ect ?? '') ? 1 : -1)
+      )
     );
   }
 
   addComment$(body: CommentModel): Observable<CommentModel> {
-    return this.httpClient.post<CommentModel>(this.commentEndPoint, body, {
-      headers: new HttpHeaders().set(
-        'Response',
-        'Comment created successfully'
-      ),
-    });
+    const { _id, _kmd, ...data } = body as any;
+    return from(
+      addDoc(collection(this.firestore, this.commentCollection), {
+        ...data,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      }).then(ref => {
+        this.toastr.success('Comment created successfully');
+        return { ...data, _id: ref.id } as CommentModel;
+      })
+    );
   }
 
   deleteComment$(id: string): Observable<CommentModel> {
-    return this.httpClient.delete<CommentModel>(
-      `${this.commentEndPoint}/${id}`,
-      {
-        headers: new HttpHeaders().set(
-          'Response',
-          'Comment deleted successfully'
-        ),
-      }
+    return from(
+      deleteDoc(doc(this.firestore, this.commentCollection, id))
+        .then(() => {
+          this.toastr.success('Comment deleted successfully');
+          return { _id: id } as CommentModel;
+        })
     );
   }
 
   deleteAllCommentsByArticle$(articleId: string): Observable<CommentModel[]> {
-    return this.httpClient.delete<CommentModel[]>(
-      `${this.commentEndPoint}?query={"articleId":"${articleId}"}`
+    return from(
+      getDocs(query(
+        collection(this.firestore, this.commentCollection),
+        where('articleId', '==', articleId)
+      )).then(async snap => {
+        await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
+        return [] as CommentModel[];
+      })
     );
   }
 
   getCommentById$(id: string): Observable<CommentModel> {
-    return this.httpClient.get<CommentModel>(`${this.commentEndPoint}/${id}`);
+    return from(
+      getDoc(doc(this.firestore, this.commentCollection, id))
+        .then(snap => this.mapComment(snap.id, snap.data()))
+    );
   }
 
-  editComment$(body: CommentModel, id: string, operation: string) : Observable<CommentModel> {
-    return this.httpClient.put<CommentModel>(`${this.commentEndPoint}/${id}`, body, {
-      headers: new HttpHeaders().set(
-        'Response',
-        `Comment ${operation} successfully`
-      ),
-    });
+  editComment$(body: CommentModel, id: string, operation: string): Observable<CommentModel> {
+    const { _id, _kmd, ...data } = body as any;
+    return from(
+      updateDoc(doc(this.firestore, this.commentCollection, id), {
+        ...data,
+        updatedAt: serverTimestamp(),
+      }).then(() => {
+        this.toastr.success(`Comment ${operation} successfully`);
+        return { ...data, _id: id } as CommentModel;
+      })
+    );
   }
 }

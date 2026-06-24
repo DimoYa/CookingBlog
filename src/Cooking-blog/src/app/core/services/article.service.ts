@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Firestore, collection, doc, addDoc, getDoc, getDocs, updateDoc, deleteDoc, query, where, orderBy, serverTimestamp, Timestamp } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
+import { from, Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import ArticleModel from '../models/article-model';
 
@@ -10,61 +10,87 @@ import ArticleModel from '../models/article-model';
 })
 export class ArticleService {
   constructor(
-    private httpClient: HttpClient,
-    private authenticationService: AuthenticationService
+    private firestore: Firestore,
+    private authenticationService: AuthenticationService,
+    private toastr: ToastrService,
   ) { }
 
-  private readonly baseUrl = environment.apiAppUrl;
-  private readonly articleEndPoint = `${this.baseUrl}/article`;
+  private readonly articleCollection = 'articles';
+
+  private mapArticle(id: string, data: any): ArticleModel {
+    return {
+      ...data,
+      _id: id,
+      _kmd: {
+        ect: data?.createdAt instanceof Timestamp ? data.createdAt.toDate().toISOString() : data?.createdAt,
+        lmt: data?.updatedAt instanceof Timestamp ? data.updatedAt.toDate().toISOString() : data?.updatedAt,
+      },
+    } as ArticleModel;
+  }
 
   createArticle$(body: ArticleModel): Observable<ArticleModel> {
-    return this.httpClient.post<ArticleModel>(this.articleEndPoint, body, {
-      headers: new HttpHeaders().set(
-        'Response',
-        'Article created successfully'
-      ),
-    });
+    const { _id, _kmd, ...data } = body as any;
+    return from(
+      addDoc(collection(this.firestore, this.articleCollection), {
+        ...data,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      }).then(ref => {
+        this.toastr.success('Article created successfully');
+        return { ...data, _id: ref.id } as ArticleModel;
+      })
+    );
   }
 
   getArticles$(): Observable<ArticleModel[]> {
-    return this.httpClient.get<ArticleModel[]>(
-      `${this.articleEndPoint}?query={}&sort={"_kmd.ect": -1}`
+    return from(
+      getDocs(query(
+        collection(this.firestore, this.articleCollection),
+        orderBy('createdAt', 'desc')
+      )).then(snap => snap.docs.map(d => this.mapArticle(d.id, d.data())))
     );
   }
 
   getArticleById$(id: string): Observable<ArticleModel> {
-    return this.httpClient.get<ArticleModel>(`${this.articleEndPoint}/${id}`);
+    return from(
+      getDoc(doc(this.firestore, this.articleCollection, id))
+        .then(snap => this.mapArticle(snap.id, snap.data()))
+    );
   }
 
   getUserArticles$(): Observable<ArticleModel[]> {
     const currentUser = this.authenticationService.returnUserName();
-    return this.httpClient.get<ArticleModel[]>(
-      `${this.baseUrl}/article?query={"author":"${currentUser}"}&sort={"_kmd.ect": -1}`
+    return from(
+      getDocs(query(
+        collection(this.firestore, this.articleCollection),
+        where('author', '==', currentUser)
+      )).then(snap => snap.docs
+        .map(d => this.mapArticle(d.id, d.data()))
+        .sort((a, b) => (b._kmd?.ect ?? '') > (a._kmd?.ect ?? '') ? 1 : -1)
+      )
     );
   }
 
   deleteArticle$(id: string): Observable<ArticleModel> {
-    return this.httpClient.delete<ArticleModel>(
-      `${this.articleEndPoint}/${id}`,
-      {
-        headers: new HttpHeaders().set(
-          'Response',
-          'Article deleted successfully'
-        ),
-      }
+    return from(
+      deleteDoc(doc(this.firestore, this.articleCollection, id))
+        .then(() => {
+          this.toastr.success('Article deleted successfully');
+          return { _id: id } as ArticleModel;
+        })
     );
   }
 
-  editArticle$(body: ArticleModel, id: string) {
-    return this.httpClient.put<ArticleModel>(
-      `${this.articleEndPoint}/${id}`,
-      body,
-      {
-        headers: new HttpHeaders().set(
-          'Response',
-          'Article updated successfully'
-        ),
-      }
+  editArticle$(body: ArticleModel, id: string): Observable<ArticleModel> {
+    const { _id, _kmd, ...data } = body as any;
+    return from(
+      updateDoc(doc(this.firestore, this.articleCollection, id), {
+        ...data,
+        updatedAt: serverTimestamp(),
+      }).then(() => {
+        this.toastr.success('Article updated successfully');
+        return { ...data, _id: id } as ArticleModel;
+      })
     );
   }
 }

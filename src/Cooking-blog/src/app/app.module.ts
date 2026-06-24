@@ -12,6 +12,10 @@ import { FooterComponent } from './core/footer/footer.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ConfirmBoxConfigModule, NgxAwesomePopupModule, DialogConfigModule } from '@costlydeveloper/ngx-awesome-popup';
 import { SharedModule } from './shared/shared.module';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,9 @@ import { SharedModule } from './shared/shared.module';
     PagesModule,
     SharedModule,
     AppRoutingModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [

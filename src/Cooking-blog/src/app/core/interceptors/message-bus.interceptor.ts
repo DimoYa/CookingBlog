@@ -30,7 +30,7 @@ export class MessageBusInterceptor implements HttpInterceptor {
         }
       }),
       catchError((err) => {
-        this.toastService.error(err.error.description);
+        this.toastService.error(err?.error?.description || err?.message || 'An error occurred');
         throw err;
       })
     );

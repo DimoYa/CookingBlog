@@ -1,7 +1,9 @@
 img {
-    max-width: 16em;
-    max-height: 18em;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
     display: block;
+    flex-shrink: 0;
 }
 
 button {

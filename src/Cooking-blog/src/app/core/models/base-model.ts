@@ -1,7 +1,6 @@
 interface Base {
-  _id: string;
-  _acl: string;
-  _kmd: string;
+  _id?: string;
+  _kmd?: { ect?: any; lmt?: any; status?: any; roles?: any; [key: string]: any };
 }
 
 export default Base;

@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Firestore, collection, doc, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
+import { from, Observable } from 'rxjs';
 import UserModel from '../models/user-model';
 
 @Injectable({
@@ -9,30 +9,48 @@ import UserModel from '../models/user-model';
 })
 export class AdminService {
 
-  private readonly baseUrl = environment.apiUserUrl;
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private firestore: Firestore,
+    private toastr: ToastrService,
+  ) { }
 
   getAllUsers$(): Observable<UserModel[]> {
-    return this.httpClient.get<UserModel[]>(`${this.baseUrl}/`);
+    return from(
+      getDocs(collection(this.firestore, 'users'))
+        .then(snap => snap.docs.map(d => this.mapUser(d.id, d.data())))
+    );
   }
 
   suspendUser$(id: string): Observable<UserModel> {
-    return this.httpClient.delete<UserModel>(`${this.baseUrl}/${id}?soft=true`, {
-      headers: new HttpHeaders().set(
-        'Response',
-        'User disabled successfully'
-      ),
-    });
+    return from(
+      updateDoc(doc(this.firestore, 'users', id), { disabled: true })
+        .then(async () => {
+          this.toastr.success('User disabled successfully');
+          const snap = await getDoc(doc(this.firestore, 'users', id));
+          return this.mapUser(snap.id, snap.data());
+        })
+    );
   }
 
   restoreUser$(id: string): Observable<UserModel> {
-    return this.httpClient.post<UserModel>(`${this.baseUrl}/${id}/_restore`, {
-      headers: new HttpHeaders().set(
-        'Response',
-        'User enabled successfully'
-      ),
-    });
+    return from(
+      updateDoc(doc(this.firestore, 'users', id), { disabled: false })
+        .then(async () => {
+          this.toastr.success('User enabled successfully');
+          const snap = await getDoc(doc(this.firestore, 'users', id));
+          return this.mapUser(snap.id, snap.data());
+        })
+    );
   }
 
+  private mapUser(uid: string, data: any): UserModel {
+    return {
+      ...data,
+      _id: uid,
+      _kmd: {
+        status: data?.disabled ? 'disabled' : undefined,
+        roles: data?.isAdmin ? [{ role: 'admin' }] : undefined,
+      },
+    } as UserModel;
+  }
 }
