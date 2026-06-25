@@ -44,7 +44,7 @@ export class AuthenticationService {
           return profile;
         })
         .catch(err => {
-          this.toastr.error(this.getAuthError(err));
+          this.toastr.success(this.getAuthError(err));
           throw err;
         })
     );
@@ -71,7 +71,7 @@ export class AuthenticationService {
           return profile;
         })
         .catch(err => {
-          this.toastr.error(this.getAuthError(err));
+          this.toastr.success(this.getAuthError(err));
           throw err;
         })
     );

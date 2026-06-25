@@ -26,7 +26,7 @@ export class RegisterComponent implements OnDestroy {
 
   passwordControl = new FormControl(null, [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(4),
     Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]/),
   ]);
 

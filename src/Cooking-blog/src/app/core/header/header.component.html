@@ -6,7 +6,7 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" [ngClass]="{ show: isExpanded }">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item" routerLink="/">
+                <li class="nav-item" routerLink="/homes">
                     <a><i class="fa fa-fw fa-home"></i><span>Home</span></a>
                 </li>
                 <ng-container *ngIf="!isLogged">
@@ -40,7 +40,7 @@
             <ul class="navbar-nav mt-2 mt-lg-0" *ngIf="isLogged">
 
                 <li class="nav-item" [routerLink]="['/user/profile/',userId]">
-                    <a><img [src]="avatar === 'null' || avatar === '' ? defaultAvatarPath: avatar" class="avatar" alt="Avatar"></a>
+                    <a><img [src]="defaultAvatarPath" class="avatar" alt="Avatar"></a>
                 </li>
                 <li class="nav-item">
                     <a (click)="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>

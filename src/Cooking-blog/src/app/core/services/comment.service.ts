@@ -84,12 +84,13 @@ export class CommentService {
   editComment$(body: CommentModel, id: string, operation: string): Observable<CommentModel> {
     const { _id, _kmd, ...data } = body as any;
     return from(
-      updateDoc(doc(this.firestore, this.commentCollection, id), {
+      addDoc(collection(this.firestore, this.commentCollection), {
         ...data,
+        createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-      }).then(() => {
+      }).then(ref => {
         this.toastr.success(`Comment ${operation} successfully`);
-        return { ...data, _id: id } as CommentModel;
+        return { ...data, _id: ref.id } as CommentModel;
       })
     );
   }

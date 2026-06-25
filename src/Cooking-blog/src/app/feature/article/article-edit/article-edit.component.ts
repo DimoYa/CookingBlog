@@ -54,9 +54,7 @@ export class ArticleEditComponent implements OnInit {
       Validators.minLength(10),
       articleContentValidator,
     ]),
-    image: new FormControl(null, [Validators.nullValidator,
-      articleImageValidator,
-    ]),
+    image: new FormControl(null, [Validators.nullValidator]),
   });
 
   editArticle(): void {
