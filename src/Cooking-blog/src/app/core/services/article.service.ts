@@ -59,12 +59,14 @@ export class ArticleService {
   }
 
   getUserArticles$(): Observable<ArticleModel[]> {
+    const currentUser = this.authenticationService.returnUserName();
     return from(
       getDocs(query(
         collection(this.firestore, this.articleCollection),
-        orderBy('createdAt', 'desc')
+        where('author', '==', currentUser)
       )).then(snap => snap.docs
         .map(d => this.mapArticle(d.id, d.data()))
+        .sort((a, b) => (b._kmd?.ect ?? '') > (a._kmd?.ect ?? '') ? 1 : -1)
       )
     );
   }

@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.params['id'];
-    this.defaultAvatarPath = '../../../assets/profile.png';
+    this.defaultAvatarPath = '/assets/profile.png';
     this.currentUser$ = this.userService.getUser$(this.userId);
     this.isAdmin = this.authenticationService.isAdmin();
   }

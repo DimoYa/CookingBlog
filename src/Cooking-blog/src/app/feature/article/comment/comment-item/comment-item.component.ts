@@ -58,7 +58,7 @@ export class CommentItemComponent implements OnInit {
     this.canDislike =
       this.comment.likes.includes(this.currentuserId);
 
-    this.defaultAvatarPath = '../../../../assets/profile.png';
+    this.defaultAvatarPath = '/assets/profile.png';
   }
 
   ngOnDestroy(): void {

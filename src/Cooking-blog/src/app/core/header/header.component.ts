@@ -15,7 +15,7 @@ export class HeaderComponent implements OnDestroy {
   username: string;
   userId: string;
   isExpanded: boolean;
-  defaultAvatarPath: string = '../../../assets/profile.png';
+  defaultAvatarPath: string = '/assets/profile.png';
   subscription: Subscription = new Subscription();
 
   constructor(

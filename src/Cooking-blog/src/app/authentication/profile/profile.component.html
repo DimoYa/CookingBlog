@@ -1,6 +1,6 @@
 <div *ngIf="currentUser$ | async as user">
     <div class="profile">
-        <div class="container"><img [src]="user.photo === null || user.photo === '' ? defaultAvatarPath : user.photo" alt="default user">
+        <div class="container"><img [src]="!user.photo ? defaultAvatarPath : user.photo" alt="default user">
             <div class="flex">
                 <p>Username: </p>
                 <p>{{user.username}}</p>

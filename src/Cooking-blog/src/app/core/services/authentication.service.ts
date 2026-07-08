@@ -99,7 +99,7 @@ export class AuthenticationService {
   }
 
   returnUserPhoto(): string {
-    return localStorage.getItem('photo');
+    return localStorage.getItem('photo') ?? '';
   }
 
   isAdmin(): boolean {
