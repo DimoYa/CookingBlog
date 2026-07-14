@@ -66,13 +66,15 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
     if (this.canModify(this.article)) {
       this.subscription.add(
         confirmBox.openConfirmBox$().subscribe((resp) => {
-          this.subscription.add(
-            this.articleService.deleteArticle$(id).subscribe(() => {
-              this.commentService.deleteAllCommentsByArticle$(id).subscribe(() => {
-                this.router.navigate(['/article/list']);
-              });
-            })
-          );
+          if (resp.success) {
+            this.subscription.add(
+              this.articleService.deleteArticle$(id).subscribe(() => {
+                this.commentService.deleteAllCommentsByArticle$(id).subscribe(() => {
+                  this.router.navigate(['/article/list']);
+                });
+              })
+            );
+          }
         })
       );
     }

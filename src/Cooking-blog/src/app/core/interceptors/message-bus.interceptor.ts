@@ -23,9 +23,15 @@ export class MessageBusInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap((event) => {
         if (event instanceof HttpResponse) {
-          const responseMsg = req.headers.getAll('response');
+          const responseMsg = event.headers.getAll('response');
           if (responseMsg) {
-            this.toastService.success(responseMsg[0])
+            // Only show success toast for 2xx status codes
+            if (event.status >= 200 && event.status < 300) {
+              this.toastService.success(responseMsg[0]);
+            } else if (event.status >= 400) {
+              // Show error toast for 4xx and 5xx status codes
+              this.toastService.error(responseMsg[0]);
+            }
           }
         }
       }),
