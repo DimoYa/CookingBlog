@@ -56,7 +56,7 @@ export class CommentService {
     return from(
       deleteDoc(doc(this.firestore, this.commentCollection, id))
         .then(() => {
-          this.toastr.success('Comment deleted successfully');
+          this.toastr.error('Comment deleted successfully');
           return { _id: id } as CommentModel;
         })
     );

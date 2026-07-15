@@ -25,7 +25,7 @@ export class AdminService {
     return from(
       updateDoc(doc(this.firestore, 'users', id), { disabled: true })
         .then(async () => {
-          this.toastr.success('User disabled successfully');
+          this.toastr.warning('User disabled successfully');
           const snap = await getDoc(doc(this.firestore, 'users', id));
           return this.mapUser(snap.id, snap.data());
         })

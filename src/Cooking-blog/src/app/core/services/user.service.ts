@@ -35,7 +35,7 @@ export class UserService {
           if (currentUser && currentUser.uid === id) {
             await deleteUser(currentUser);
           }
-          this.toastr.success('User deleted successfully');
+          this.toastr.error('User deleted successfully');
         })
     );
   }

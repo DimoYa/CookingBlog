@@ -75,7 +75,7 @@ export class ArticleService {
     return from(
       deleteDoc(doc(this.firestore, this.articleCollection, id))
         .then(() => {
-          this.toastr.success('Article deleted successfully');
+          this.toastr.error('Article deleted successfully');
           return { _id: id } as ArticleModel;
         })
     );

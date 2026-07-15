@@ -44,7 +44,7 @@ export class AuthenticationService {
           return profile;
         })
         .catch(err => {
-          this.toastr.success(this.getAuthError(err));
+          this.toastr.error(this.getAuthError(err));
           throw err;
         })
     );
@@ -71,7 +71,7 @@ export class AuthenticationService {
           return profile;
         })
         .catch(err => {
-          this.toastr.success(this.getAuthError(err));
+          this.toastr.error(this.getAuthError(err));
           throw err;
         })
     );
@@ -121,7 +121,9 @@ export class AuthenticationService {
   private getAuthError(err: any): string {
     const code: string = err?.code || '';
     const map: Record<string, string> = {
-      'auth/invalid-credential':     'Invalid email or password.',
+      'auth/invalid-credential':          'Invalid email or password.',
+      'auth/invalid-login-credentials':    'Wrong password.',
+      'auth/invalid-password':             'Wrong password.',
       'auth/user-not-found':         'No account found with this email.',
       'auth/wrong-password':         'Incorrect password.',
       'auth/email-already-in-use':   'An account with this email already exists.',

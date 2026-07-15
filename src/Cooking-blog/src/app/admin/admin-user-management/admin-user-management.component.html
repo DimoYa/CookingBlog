@@ -11,10 +11,10 @@
           <ng-container *ngIf="user._kmd['status'] === undefined">
             <button type="button" class="btn btn-info" [routerLink]="['/user/profile',user._id]">Profile
               details</button>
-            &nbsp;
+            <!-- &nbsp;
             <button type="button" class="btn btn-success" [routerLink]="['/user/profile/edit/',user._id]">Update user
-              info</button>
-            &nbsp;
+              info</button> -->
+            <!-- &nbsp; -->
             <button *ngIf="user._kmd['roles'] === undefined" type="button" class="btn btn-danger"
               (click)="disableUser(user._id)">Disable
               user</button>

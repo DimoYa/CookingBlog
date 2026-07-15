@@ -1,0 +1,20 @@
+<ng-template [ngIf]="articles">
+  <div class="container admin">
+    <h3>Admin panel - Article management</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let article of pageSlice">
+        <h5>{{ article.headline }}</h5>
+        <p class="text-muted">by {{ article.author }}</p>
+        <div id="buttons">
+          <button type="button" class="btn btn-info" [routerLink]="['/article/details', article._id]">View</button>
+          <button type="button" class="btn btn-warning" [routerLink]="['/article/edit', article._id]">Edit</button>
+          <button type="button" class="btn btn-danger" (click)="deleteArticle(article._id)">Delete</button>
+        </div>
+        <hr>
+      </li>
+    </ul>
+    <mat-paginator [length]="articles.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25]"
+      aria-label="Select page" (page)="OnPageChange($event)">
+    </mat-paginator>
+  </div>
+</ng-template>
