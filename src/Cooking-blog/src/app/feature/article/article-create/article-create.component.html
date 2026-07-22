@@ -34,12 +34,25 @@
                 </p>
             </ng-container>
 
-            <!-- imageUrl -->
+            <!-- image URL -->
             <p class="field field-icon">
-                <label for="image"><span><i class="fa fa-image"></i></span></label>
-                <input formControlName="image"
-                    type="text" name="image" id="image" placeholder="Add image link">
+                <label for="image">
+                    <span><i class="fa fa-image"></i></span>
+                </label>
+
+                <input formControlName="image" [class.input-error]="f['image'].touched && f['image'].invalid"
+                    type="text" name="image" id="image" placeholder="Add image link" />
             </p>
+
+            <ng-container *ngIf="f['image'].touched && f['image'].invalid">
+                <p *ngIf="f['image'].hasError('required')" class="alert alert-danger">
+                    Image URL is required!
+                </p>
+
+                <p *ngIf="!f['image'].hasError('required')" class="alert alert-danger">
+                    Please enter a valid image URL!
+                </p>
+            </ng-container>
 
             <button class="btn btn-primary btn-block" [disabled]="articleCreateFormGroup.invalid">Submit your
                 article</button>

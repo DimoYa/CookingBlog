@@ -7,11 +7,15 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleMineComponent } from './article-mine/article-mine.component';
 
 const routes: Routes = [
-  { path: 'create', component: ArticleCreateComponent },
-  { path: 'list', component: ArticleListComponent },
-  { path: 'list/:articleId', component: ArticleDetailsComponent },
-  { path: 'list/:articleId/edit', component: ArticleEditComponent },
-  { path: 'myArticles', component: ArticleMineComponent },
+  { path: 'create', component: ArticleCreateComponent, canActivate: [UserGuard] },
+  { path: 'list', component: ArticleListComponent, canActivate: [UserGuard] },
+  { path: 'list/:articleId', component: ArticleDetailsComponent, canActivate: [UserGuard] },
+  { path: 'list/:articleId/edit', component: ArticleEditComponent, canActivate: [UserGuard] },
+  {
+  path: 'myArticles',
+  component: ArticleMineComponent,
+  canActivate: [UserGuard]
+},
 ];
 
 export const ArticleRoutingModule = RouterModule.forChild(routes);

@@ -24,7 +24,7 @@ export class ArticleCreateComponent implements OnDestroy {
 
   articleCreateFormGroup: FormGroup = this.formBuilder.group({
     headline: new FormControl(null, [
-       Validators.required,
+      Validators.required,
       Validators.maxLength(50),
       articleHeadlineValidator,
     ]),
@@ -33,7 +33,10 @@ export class ArticleCreateComponent implements OnDestroy {
       Validators.minLength(10),
       articleContentValidator,
     ]),
-    image: new FormControl(null, [Validators.nullValidator, articleImageValidator]),
+    image: new FormControl('', [
+      Validators.required,
+      articleImageValidator,
+    ]),
   });
 
   constructor(
@@ -48,6 +51,11 @@ export class ArticleCreateComponent implements OnDestroy {
   }
 
   createArticle(): void {
+    if (this.articleCreateFormGroup.invalid) {
+      this.articleCreateFormGroup.markAllAsTouched();
+      return;
+    }
+
     const body: ArticleModel = this.articleCreateFormGroup.value;
     body.author = this.authenticationService.returnUserName();
 
@@ -57,6 +65,7 @@ export class ArticleCreateComponent implements OnDestroy {
       })
     );
   }
+
   get f() {
     return this.articleCreateFormGroup.controls;
   }
