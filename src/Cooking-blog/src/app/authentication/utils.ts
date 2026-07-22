@@ -1,19 +1,19 @@
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 export function emailValidator(
-  control: AbstractControl
+    control: AbstractControl
 ): ValidationErrors | null {
-  const value = control.value;
+    const value = control.value;
 
-  if (!value) {
-    return null;
-  }
+    if (!value) {
+        return null;
+    }
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  return emailPattern.test(value)
-    ? null
-    : { email: true };
+    return emailPattern.test(value)
+        ? null
+        : { email: true };
 }
 
 export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
@@ -76,18 +76,22 @@ export function articleContentValidator(control: AbstractControl): ValidationErr
     return null;
 }
 
-export function articleImageValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+export function articleImageValidator(
+    control: AbstractControl
+): ValidationErrors | null {
+    const value = control.value?.trim();
 
+    // Image URL is optional
     if (!value) {
-        return null
+        return null;
     }
 
     if (!/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value)) {
         return {
             articleImage: true,
-        }
+        };
     }
+
     return null;
 }
 

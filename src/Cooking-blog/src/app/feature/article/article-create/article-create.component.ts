@@ -34,7 +34,6 @@ export class ArticleCreateComponent implements OnDestroy {
       articleContentValidator,
     ]),
     image: new FormControl('', [
-      Validators.required,
       articleImageValidator,
     ]),
   });
