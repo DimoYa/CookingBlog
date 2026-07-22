@@ -1,3 +1,49 @@
 i {
     cursor: pointer;
 }
+
+.comment-author-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comment-avatar {
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px;
+  max-width: 25px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.comment-author,
+.comment-posted,
+.comment-date,
+.comment-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.comment-posted {
+  gap: 8px;
+}
+
+@media screen and (max-width: 600px) {
+  .comment-author-info {
+    gap: 6px;
+  }
+
+  .comment-author,
+  .comment-posted,
+  .comment-date,
+  .comment-time {
+    font-size: 12px;
+  }
+}

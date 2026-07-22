@@ -1,18 +1,19 @@
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
-export function emailValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+export function emailValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  const value = control.value;
 
-    if (!value) {
-        return null
-    }
-
-    if (!/\S+@\S+/.test(value)) {
-        return {
-            email: true,
-        }
-    }
+  if (!value) {
     return null;
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  return emailPattern.test(value)
+    ? null
+    : { email: true };
 }
 
 export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
