@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -16,7 +16,7 @@ import { CommentService } from 'src/app/core/services/comment.service';
   templateUrl: './comment-item.component.html',
   styleUrls: ['./comment-item.component.css'],
 })
-export class CommentItemComponent implements OnInit {
+export class CommentItemComponent implements OnInit, OnDestroy {
   @Input() comment: CommentModel;
   @Output() articleCommentEmitter = new EventEmitter<void>();
 
@@ -37,7 +37,7 @@ export class CommentItemComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private commentService: CommentService
-  ) { }
+  ) {}
 
   editCommentForm: FormGroup = this.formBuilder.group({
     content: new FormControl(null, [Validators.required]),
@@ -51,18 +51,22 @@ export class CommentItemComponent implements OnInit {
     this.canModify =
       this.comment.author === this.currentuserName || this.isAdmin;
 
-    this.canLike =
-      !this.comment.likes.includes(this.currentuserId) &&
-      this.comment.author !== this.currentuserName;
-
-    this.canDislike =
-      this.comment.likes.includes(this.currentuserId);
+    this.updateLikeState();
 
     this.defaultAvatarPath = '/assets/profile.png';
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  // NEW METHOD — recomputes like/dislike button visibility
+  private updateLikeState(): void {
+    const hasLiked = this.comment.likes.includes(this.currentuserId);
+    const isOwnComment = this.comment.author === this.currentuserName;
+
+    this.canLike = !hasLiked && !isOwnComment;
+    this.canDislike = hasLiked && !isOwnComment;
   }
 
   deleteComment(id: string): void {
@@ -91,33 +95,49 @@ export class CommentItemComponent implements OnInit {
     body.likes = this.comment.likes;
 
     this.subscription.add(
-      this.commentService.editComment$(body, commentId, 'edited').subscribe(() => {
-        this.articleCommentEmitter.emit();
-        this.editMode = false;  
-      })
+      this.commentService
+        .editComment$(body, commentId, 'edited')
+        .subscribe(() => {
+          this.articleCommentEmitter.emit();
+          this.editMode = false;
+        })
     );
   }
 
   likeComment(commentId: string): void {
     const body = this.comment;
-    body.likes.push(this.currentuserId);
-    body.likes.push(this.currentuserId);
+
+    if (!body.likes.includes(this.currentuserId)) {
+      body.likes.push(this.currentuserId);
+    }
+
+    this.updateLikeState();
 
     this.subscription.add(
-      this.commentService.editComment$(body, commentId, 'liked').subscribe(() => {
-        this.articleCommentEmitter.emit();
-      })
+      this.commentService
+        .editComment$(body, commentId, 'liked')
+        .subscribe(() => {
+          this.articleCommentEmitter.emit();
+        })
     );
   }
 
   dislikeComment(commentId: string): void {
     const body = this.comment;
     const index = body.likes.indexOf(this.currentuserId);
-    body.likes.splice(index, 1);
+
+    if (index !== -1) {
+      body.likes.splice(index, 1);
+    }
+
+    this.updateLikeState();
+
     this.subscription.add(
-      this.commentService.editComment$(body, commentId, 'disliked').subscribe(() => {
-        this.articleCommentEmitter.emit();
-      })
+      this.commentService
+        .editComment$(body, commentId, 'disliked')
+        .subscribe(() => {
+          this.articleCommentEmitter.emit();
+        })
     );
   }
 

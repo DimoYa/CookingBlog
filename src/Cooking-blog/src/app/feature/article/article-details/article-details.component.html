@@ -3,13 +3,13 @@
         <h4 class="panel-title">{{article.headline}}</h4>
         <div class="mb-2"><img *ngIf="article.image" alt="image" src="{{article.image}}"></div>
         <div class="d-flex flex-column align-items-start menu">
-            <div *ngIf="article._kmd['ect']== article._kmd['lmt']" class="mb-1 text-muted small"><b>Created by:</b>
-                <span class="fa fa-pencil p-1"> {{article.author}}</span>
+            <div class="mb-1 text-muted small"><b>Created by:</b>
+                <span class="fa fa-user p-1"> {{article.author}}</span>
             </div>
             <div *ngIf="article._kmd['ect']!= article._kmd['lmt']" class="mb-1 text-muted small"><b>Modified by:</b>
                 <span class="fa fa-pencil p-1"> {{article.modified}}</span>
             </div>
-            <div *ngIf="article._kmd['ect']== article._kmd['lmt']" class="mb-1 text-muted small"><b>Published:</b>
+            <div class="mb-1 text-muted small"><b>Published:</b>
                 <span class="fas fa-calendar p-1"> {{article._kmd['ect'] | date: 'fullDate'}}</span>
                 <span class="fa fa-clock-o p-1"> {{article._kmd['ect'] | date: 'HH:mm'}}</span>
             </div>
