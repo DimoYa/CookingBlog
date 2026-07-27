@@ -17,18 +17,10 @@ export function emailValidator(
 }
 
 export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+    if (!control.value) return null;
 
-    if (!value) {
-        return null
-    }
-
-    if (!/^([A-z]+\s[A-z]+)$/.test(value)) {
-        return {
-            fullname: true,
-        }
-    }
-    return null;
+    const regex = /^[A-Z][a-z]+ [A-Z][a-z]+$/;
+    return regex.test(control.value) ? null : { fullname: true };
 }
 
 export function phoneNumberValidator(control: AbstractControl): ValidationErrors | null {

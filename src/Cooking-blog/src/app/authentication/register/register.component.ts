@@ -47,7 +47,7 @@ export class RegisterComponent implements OnDestroy {
       ]),
     }),
     phoneCode: new FormControl(this.getCodes[0]),
-    phoneNumber: new FormControl(null, phoneNumberValidator),
+    phoneNumber: new FormControl(null, [Validators.required, phoneNumberValidator]),
     photo: new FormControl(null),
   });
 
