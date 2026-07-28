@@ -38,9 +38,9 @@
                     </app-comment-create>
 
                     <div [hidden]="(comments$ | async)?.length == 0" class="mt-5">
-                        <button class="accordion-button" (click)="isExpanded=!isExpanded" type="button"
-                            [attr.aria-expanded]="isExpanded" aria-controls="collapse"
-                            *ngIf="(comments$ | async)?.length">
+                        <button class="accordion-button" (click)="isExpanded=!isExpanded" type="button" 2
+                            [class.collapsed]="!isExpanded" 3 [attr.aria-expanded]="isExpanded" aria-controls="collapse"
+                            4 *ngIf="(comments$ | async)?.length">
                             <span *ngIf="isExpanded==false">Show comments</span>
                             <span *ngIf="isExpanded==true">Hide comments</span>
                         </button>
