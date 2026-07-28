@@ -29,7 +29,7 @@ export class CommentCreateComponent implements OnDestroy {
   @Output() articleCommentEmitter = new EventEmitter<void>();
 
   commentForm: FormGroup = this.formBuilder.group({
-    content: new FormControl(null, [Validators.required]),
+    content: new FormControl(null, [Validators.required, Validators.maxLength(500)]),
   });
 
   constructor(

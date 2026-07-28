@@ -39,12 +39,15 @@
 
         <!-- content -->
         <p class="form-outline mb-4">
-            <textarea type="text" class="form-control" rows="3" formControlName="content"
+            <textarea type="text" class="form-control" rows="3" formControlName="content" maxlength="500"
                 [ngModel]="comment.content"></textarea>
         </p>
         <ng-container *ngIf="f['content'].touched && f['content'].invalid">
             <p *ngIf="f['content'].errors['required']" class="alert alert-danger">
                 Content is required!
+            </p>
+            <p *ngIf="f['content'].errors['maxlength']" class="alert alert-danger">
+                Comment cannot exceed 500 characters!
             </p>
         </ng-container>
 

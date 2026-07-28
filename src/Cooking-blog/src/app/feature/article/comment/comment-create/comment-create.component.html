@@ -1,16 +1,20 @@
 <form [formGroup]="commentForm" (submit)="addComment()">
     <h5 class="label">Add comment</h5>
 
-        <!-- content -->
-        <p class="form-outline mb-4">
-            <textarea type="text" id="addANote" class="form-control" rows="3" placeholder="Type comment..." formControlName="content"></textarea> 
+    <!-- content -->
+    <p class="form-outline mb-4">
+        <textarea type="text" id="addANote" class="form-control" rows="3" placeholder="Type comment..."
+            formControlName="content" maxlength="500"></textarea>
+    </p>
+    <ng-container *ngIf="f['content'].touched && f['content'].invalid">
+        <p *ngIf="f['content'].errors['required']" class="alert alert-danger">
+            Content is required!
         </p>
-        <ng-container *ngIf="f['content'].touched && f['content'].invalid">
-            <p *ngIf="f['content'].errors['required']" class="alert alert-danger">
-                Content is required!
-            </p>
-        </ng-container>
+        <p *ngIf="f['content'].errors['maxlength']" class="alert alert-danger">
+            Comment cannot exceed 500 characters!
+        </p>
+    </ng-container>
 
-        <button type="submit" class="btn btn-primary btn-sm" [disabled]="commentForm.invalid"> Submit comment
-        </button>
+    <button type="submit" class="btn btn-primary btn-sm" [disabled]="commentForm.invalid"> Submit comment
+    </button>
 </form>

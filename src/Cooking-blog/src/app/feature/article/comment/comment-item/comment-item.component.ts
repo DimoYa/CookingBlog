@@ -37,10 +37,10 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private commentService: CommentService
-  ) {}
+  ) { }
 
   editCommentForm: FormGroup = this.formBuilder.group({
-    content: new FormControl(null, [Validators.required]),
+    content: new FormControl(null, [Validators.required, Validators.maxLength(500)]),
   });
 
   ngOnInit(): void {
