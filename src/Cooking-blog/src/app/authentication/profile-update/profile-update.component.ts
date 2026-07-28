@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import UserModel from 'src/app/core/models/user-model';
 import { UserService } from 'src/app/core/services/user.service';
-import { fullNameValidator, phoneNumberValidator } from '../utils';
+import { articleImageValidator, fullNameValidator, phoneNumberValidator } from '../utils';
 
 @Component({
   selector: 'app-profile-update',
@@ -35,8 +35,8 @@ export class ProfileUpdateComponent implements OnInit {
   updateUserForm: FormGroup = this.fb.group({
     fullname: new FormControl(null, [Validators.required, fullNameValidator]),
     phoneCode: new FormControl(null),
-    phoneNumber: new FormControl(null, phoneNumberValidator),
-    photo: new FormControl(this.userData?.phoneCode),
+    phoneNumber: new FormControl(null, [Validators.required, phoneNumberValidator]),
+    photo: new FormControl(null, articleImageValidator),
   });
 
   updateUser(): void {

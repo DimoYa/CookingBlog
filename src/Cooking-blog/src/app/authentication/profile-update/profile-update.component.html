@@ -31,17 +31,25 @@
                 </p>
 
                 <ng-container *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+                    <p *ngIf="f['phoneNumber'].errors['required']" class="alert-danger">
+                        Invalid phone number!
+                    </p>
                     <p *ngIf="f['phoneNumber'].errors['phoneNumber']" class="alert-danger">
                         Invalid phone number!
                     </p>
                 </ng-container>
-
 
                 <!-- photo -->
                 <p class="field field-icon">
                     <label for="fullname"><span><i class="fa fa-image"></i></span></label>
                     <input formControlName="photo" placeholder="Add image link" [ngModel]="userData.photo">
                 </p>
+
+                <ng-container *ngIf="f['photo'].touched && f['photo'].invalid">
+                    <p *ngIf="f['photo'].errors['articleImage']" class="alert-danger">
+                        Please enter valid URL link
+                    </p>
+                </ng-container>
 
 
                 <div class="buttons">
