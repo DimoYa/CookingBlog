@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import {
+  articleImageValidator,
   emailValidator,
   fullNameValidator,
   passwordMatch,
@@ -48,7 +49,7 @@ export class RegisterComponent implements OnDestroy {
     }),
     phoneCode: new FormControl(this.getCodes[0]),
     phoneNumber: new FormControl(null, [Validators.required, phoneNumberValidator]),
-    photo: new FormControl(null),
+    photo: new FormControl(null, [articleImageValidator]),
   });
 
   constructor(

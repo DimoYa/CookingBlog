@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationHistoryService } from './core/services/navigation-history.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'forum-app';
+  title = 'cokking-blog';
+  constructor(private navigationHistory: NavigationHistoryService) {}
 }

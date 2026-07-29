@@ -105,39 +105,29 @@ export class CommentItemComponent implements OnInit, OnDestroy {
   }
 
   likeComment(commentId: string): void {
-    const body = this.comment;
-
-    if (!body.likes.includes(this.currentuserId)) {
-      body.likes.push(this.currentuserId);
+    if (!this.comment.likes.includes(this.currentuserId)) {
+      this.comment.likes.push(this.currentuserId);
     }
-
     this.updateLikeState();
 
     this.subscription.add(
       this.commentService
-        .editComment$(body, commentId, 'liked')
-        .subscribe(() => {
-          this.articleCommentEmitter.emit();
-        })
+        .toggleLike$(commentId, this.comment.likes, 'liked')
+        .subscribe(() => this.articleCommentEmitter.emit())
     );
   }
 
   dislikeComment(commentId: string): void {
-    const body = this.comment;
-    const index = body.likes.indexOf(this.currentuserId);
-
+    const index = this.comment.likes.indexOf(this.currentuserId);
     if (index !== -1) {
-      body.likes.splice(index, 1);
+      this.comment.likes.splice(index, 1);
     }
-
     this.updateLikeState();
 
     this.subscription.add(
       this.commentService
-        .editComment$(body, commentId, 'disliked')
-        .subscribe(() => {
-          this.articleCommentEmitter.emit();
-        })
+        .toggleLike$(commentId, this.comment.likes, 'disliked')
+        .subscribe(() => this.articleCommentEmitter.emit())
     );
   }
 

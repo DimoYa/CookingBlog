@@ -24,7 +24,7 @@ export class CommentService {
   constructor(
     private firestore: Firestore,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   private readonly commentCollection = 'comments';
 
@@ -107,6 +107,23 @@ export class CommentService {
       getDoc(doc(this.firestore, this.commentCollection, id)).then((snap) =>
         this.mapComment(snap.id, snap.data())
       )
+    );
+  }
+
+  toggleLike$(id: string, likes: string[], operation: string): Observable<CommentModel> {
+    const commentRef = doc(this.firestore, this.commentCollection, id);
+
+    return from(
+      updateDoc(commentRef, { likes })
+        .then(() => {
+          this.toastr.success(`Comment ${operation} successfully`);
+          return { _id: id, likes } as CommentModel;
+        })
+        .catch(err => {
+          this.toastr.error(`Failed to ${operation} comment`);
+          console.error('toggleLike$ failed:', { id, err });
+          throw err;
+        })
     );
   }
 

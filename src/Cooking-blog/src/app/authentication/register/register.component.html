@@ -56,12 +56,21 @@
                 </p>
             </ng-container>
 
-            <!-- photoUrl -->
+            <!-- photo URL -->
             <p class="field field-icon">
-                <label for="fullname"><span><i class="fa fa-image"></i></span></label>
-                <input formControlName="photo" type="text" name="photo" placeholder="Add image url"
-                    style="width: 100%;">
+                <label for="photo">
+                    <span><i class="fa fa-image"></i></span>
+                </label>
+
+                <input formControlName="photo" [class.input-error]="f['photo'].touched && f['photo'].invalid"
+                    type="text" name="photo" id="photo" placeholder="Add image url (optional)" style="width: 100%;" />
             </p>
+
+            <ng-container *ngIf="f['photo'].touched && f['photo'].invalid">
+                <p *ngIf="f['photo'].hasError('articleImage')" class="alert-danger">
+                    Please enter a valid image URL!
+                </p>
+            </ng-container>
 
             <!-- password -->
 
