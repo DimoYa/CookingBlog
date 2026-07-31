@@ -1,0 +1,68 @@
+<div class="container highlights-container">
+  <h2 class="page-title">Community Highlights</h2>
+
+  <div *ngIf="isLoading" class="loading-state">Loading…</div>
+
+  <ng-container *ngIf="!isLoading">
+    <!-- Most Commented Articles -->
+    <section class="section">
+      <h3 class="section-title">Most Commented Articles</h3>
+
+      <p *ngIf="highlightedArticles.length === 0" class="empty-state">
+        No highly-discussed articles yet.
+      </p>
+
+      <div *ngFor="let item of highlightedArticles" class="article-card">
+        <div class="article-header">
+          <div>
+            <h4 class="article-headline">{{ item.article.headline }}</h4>
+            <span class="article-meta">
+              By <strong>{{ item.article.author }}</strong> &middot;
+              <i class="fas fa-comments"></i> {{ item.commentCount }} comments
+            </span>
+          </div>
+          <a class="btn btn-secondary continue-btn"
+             [routerLink]="['/article/list', item.article._id]">
+            Continue reading
+          </a>
+        </div>
+
+        <!-- Top-rated comment -->
+        <div class="top-comment">
+          <p class="top-comment-label"><i class="fas fa-star"></i> Top-rated comment</p>
+          <div class="top-comment-body">
+            <img [src]="item.topComment.authorPicture" alt="avatar" class="comment-avatar" />
+            <div class="comment-content">
+              <p class="comment-text">{{ item.topComment.content }}</p>
+              <span class="comment-meta">
+                <strong>{{ item.topComment.author }}</strong> &middot;
+                <i class="fas fa-thumbs-up"></i> {{ item.topComment.likeCount }} likes
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Contributors -->
+    <section class="section">
+      <h3 class="section-title">Top Contributors</h3>
+
+      <p *ngIf="topContributors.length === 0" class="empty-state">
+        No top contributors yet.
+      </p>
+
+      <div class="contributors-grid">
+        <div *ngFor="let contributor of topContributors" class="contributor-card">
+          <img [src]="contributor.avatar" alt="avatar" class="contributor-avatar" />
+          <div class="contributor-info">
+            <p class="contributor-name">{{ contributor.username }}</p>
+            <span class="contributor-meta">
+              <i class="fas fa-comments"></i> {{ contributor.commentCount }} comments
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</div>

@@ -46,6 +46,14 @@ export class CommentService {
     } as CommentModel;
   }
 
+  getAllComments$(): Observable<CommentModel[]> {
+    return from(
+      getDocs(collection(this.firestore, this.commentCollection)).then((snap) =>
+        snap.docs.map((d) => this.mapComment(d.id, d.data()))
+      )
+    );
+  }
+
   getAllCommentsByArticle$(articleId: string): Observable<CommentModel[]> {
     return from(
       getDocs(

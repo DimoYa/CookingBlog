@@ -1,0 +1,144 @@
+.highlights-container {
+  padding: 2rem 1rem;
+  max-width: 860px;
+}
+
+.page-title {
+  margin-bottom: 1.5rem;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: #777;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  border-bottom: 2px solid #0d6efd;
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.2rem;
+  color: #0d6efd;
+}
+
+.empty-state {
+  color: #888;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* Article card */
+.article-card {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+  background: #fff;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.article-headline {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+.article-meta {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.continue-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Top comment */
+.top-comment {
+  background: #f8f9fa;
+  border-left: 3px solid #ffc107;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+
+.top-comment-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #856404;
+  margin-bottom: 0.5rem;
+}
+
+.top-comment-body {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.comment-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-text {
+  margin: 0 0 0.25rem;
+  font-size: 0.92rem;
+}
+
+.comment-meta {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Contributors */
+.contributors-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.contributor-card {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  min-width: 200px;
+}
+
+.contributor-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.contributor-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.contributor-meta {
+  font-size: 0.82rem;
+  color: #555;
+}

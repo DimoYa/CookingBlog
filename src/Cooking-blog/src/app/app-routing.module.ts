@@ -26,6 +26,10 @@ const routes: Routes = [
         loadChildren: () => import('./feature/article/article.module').then(m => m.ArticleModule)/*, canLoad: [UserGuard]*/
     },
     {
+        path: 'community',
+        loadChildren: () => import('./feature/community/community.module').then(m => m.CommunityModule)
+    },
+    {
         path: '**',
         component: NotFoundComponent
     }
