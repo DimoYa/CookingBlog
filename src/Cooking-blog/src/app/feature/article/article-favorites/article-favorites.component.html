@@ -1,0 +1,34 @@
+<div class="container favorites-container">
+  <h2>My Favorites</h2>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <app-load-animation></app-load-animation>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <p *ngIf="favorites.length === 0" class="empty-state">
+      You haven't saved any articles yet.
+    </p>
+
+    <div class="favorites-list">
+      <div *ngFor="let item of favorites" class="favorite-item">
+        <div class="favorite-content">
+          <h4 class="favorite-headline">{{ item.article.headline }}</h4>
+          <p class="favorite-author">By {{ item.article.author }}</p>
+        </div>
+
+        <div class="favorite-actions">
+          <a class="btn btn-secondary btn-sm"
+             [routerLink]="['/article/list', item.article._id]">
+            <i class="fas fa-book-open"></i> Continue reading
+          </a>
+          <button class="btn btn-danger btn-sm"
+                  (click)="removeFavorite(item.article._id)"
+                  title="Remove from favorites">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

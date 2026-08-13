@@ -12,6 +12,7 @@ import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { CommentCreateComponent } from './comment/comment-create/comment-create.component';
 import { CommentItemComponent } from './comment/comment-item/comment-item.component';
 import { ArticleMineComponent } from './article-mine/article-mine.component';
+import { ArticleFavoritesComponent } from './article-favorites/article-favorites.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 
@@ -25,7 +26,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ArticleEditComponent,
     CommentCreateComponent,
     CommentItemComponent,
-    ArticleMineComponent
+    ArticleMineComponent,
+    ArticleFavoritesComponent,
   ],
   imports: [
     CommonModule,

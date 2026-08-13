@@ -18,3 +18,34 @@ img,
     background-color: #4ebced;
     color: #fff;
 }
+
+.article-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.panel-title {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.btn-favorite {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+}
+
+.btn-favorite:hover {
+    color: #ffc107;
+    transform: scale(1.1);
+}
+
+.btn-favorite.favorited {
+    color: #ffc107;
+}

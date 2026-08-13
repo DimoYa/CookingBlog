@@ -1,6 +1,15 @@
 <ng-template [ngIf]="article">
     <div class="container article">
-        <h4 class="panel-title">{{ article.headline }}</h4>
+        <div class="article-header-top">
+            <h4 class="panel-title">{{ article.headline }}</h4>
+            <button *ngIf="canFavorite()" 
+                    class="btn btn-favorite"
+                    (click)="toggleFavorite()"
+                    [class.favorited]="isFavorited"
+                    title="Add to favorites">
+                <i [class]="isFavorited ? 'fas fa-star' : 'far fa-star'"></i>
+            </button>
+        </div>
 
         <div class="mb-2">
             <img *ngIf="article.image" alt="image" src="{{ article.image }}" />

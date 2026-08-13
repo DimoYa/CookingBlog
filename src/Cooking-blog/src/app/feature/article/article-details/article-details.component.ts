@@ -14,6 +14,7 @@ import CommentModel from 'src/app/core/models/comment-model';
 import { ArticleService } from 'src/app/core/services/article.service';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { CommentService } from 'src/app/core/services/comment.service';
+import { FavoriteService } from 'src/app/core/services/favorite.service';
 import { NavigationHistoryService } from 'src/app/core/services/navigation-history.service';
 
 @Component({
@@ -28,8 +29,10 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   id: string;
   currentuserName: string;
+  currentUserId: string;
   isAdmin: boolean;
   isExpanded = false;
+  isFavorited = false;
 
   // Default to All Articles; overridden by navigation history
   private returnUrl = '/article/list';
@@ -41,6 +44,7 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private commentService: CommentService,
     private authenticationService: AuthenticationService,
+    private favoriteService: FavoriteService,
     private navigationHistory: NavigationHistoryService,
     private router: Router,
     private route: ActivatedRoute
@@ -64,11 +68,16 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
           this.comments$ = this.commentService.getAllCommentsByArticle$(
             this.id
           );
+
+          if (this.canFavorite()) {
+            this.checkFavoriteStatus();
+          }
         });
       })
     );
 
     this.currentuserName = this.authenticationService.returnUserName();
+    this.currentUserId = this.authenticationService.returnId();
     this.isAdmin = this.authenticationService.isAdmin();
   }
 
@@ -78,6 +87,48 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
 
   canModify(article: ArticleModel): boolean {
     return article.author === this.currentuserName || this.isAdmin;
+  }
+
+  canFavorite(): boolean {
+    return this.currentuserName !== '' && this.article?.author !== this.currentuserName;
+  }
+
+  checkFavoriteStatus(): void {
+    this.subscription.add(
+      this.favoriteService
+        .isFavorited$(this.currentUserId, this.id)
+        .subscribe((isFav) => {
+          this.isFavorited = isFav;
+        })
+    );
+  }
+
+  toggleFavorite(): void {
+    if (!this.canFavorite()) {
+      return;
+    }
+
+    if (this.isFavorited) {
+      this.subscription.add(
+        this.favoriteService
+          .removeFavorite$(this.currentUserId, this.id)
+          .subscribe({
+            next: () => {
+              this.isFavorited = false;
+            },
+          })
+      );
+    } else {
+      this.subscription.add(
+        this.favoriteService
+          .addFavorite$(this.currentUserId, this.id)
+          .subscribe({
+            next: () => {
+              this.isFavorited = true;
+            },
+          })
+      );
+    }
   }
 
   deleteArticle(id: string): void {
@@ -102,6 +153,11 @@ export class ArticleDetailsComponent implements OnInit, OnDestroy {
               switchMap(() =>
                 this.commentService
                   .deleteAllCommentsByArticle$(id)
+                  .pipe(defaultIfEmpty(null))
+              ),
+              switchMap(() =>
+                this.favoriteService
+                  .removeFavoriteByArticleId$(id)
                   .pipe(defaultIfEmpty(null))
               ),
               tap(() => {

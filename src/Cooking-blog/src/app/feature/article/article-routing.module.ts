@@ -5,12 +5,14 @@ import { ArticleDetailsComponent } from './article-details/article-details.compo
 import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleMineComponent } from './article-mine/article-mine.component';
+import { ArticleFavoritesComponent } from './article-favorites/article-favorites.component';
 
 const routes: Routes = [
   { path: 'create', component: ArticleCreateComponent, canActivate: [UserGuard] },
   { path: 'list', component: ArticleListComponent, canActivate: [UserGuard] },
   { path: 'list/:articleId', component: ArticleDetailsComponent, canActivate: [UserGuard] },
   { path: 'list/:articleId/edit', component: ArticleEditComponent, canActivate: [UserGuard] },
+  { path: 'favorites', component: ArticleFavoritesComponent, canActivate: [UserGuard] },
   {
   path: 'myArticles',
   component: ArticleMineComponent,
